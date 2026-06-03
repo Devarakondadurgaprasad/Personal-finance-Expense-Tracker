@@ -22,15 +22,3 @@ Then visit:
 
 ```text
 http://127.0.0.1:5173/
-```
-
-## GitHub
-
-Upload these files to a new GitHub repository:
-
-- `index.html`
-- `styles.css`
-- `app.js`
-- `README.md`
-
-No build step or package installation is required.
