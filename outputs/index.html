@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Expense Tracker</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Personal finance</p>
+          <h1>Expense Tracker</h1>
+        </div>
+        <div class="top-actions">
+          <button class="icon-button" id="exportBtn" type="button" aria-label="Export expenses as CSV" title="Export CSV">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v10m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+          </button>
+          <button class="icon-button danger" id="resetBtn" type="button" aria-label="Clear all expenses" title="Clear data">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6m4-6v6M6 7l1 14h10l1-14M9 7V4h6v3"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <section class="summary-grid" aria-label="Expense summary">
+        <article class="metric">
+          <span>Total spent</span>
+          <strong id="totalSpent">₹0.00</strong>
+        </article>
+        <article class="metric">
+          <span>This month</span>
+          <strong id="monthSpent">₹0.00</strong>
+        </article>
+        <article class="metric">
+          <span>Budget left</span>
+          <strong id="budgetLeft">₹0.00</strong>
+        </article>
+        <article class="metric accent">
+          <span>Largest category</span>
+          <strong id="largestCategory">None</strong>
+        </article>
+      </section>
+
+      <section class="workspace">
+        <aside class="panel entry-panel">
+          <div class="panel-heading">
+            <h2 id="formTitle">Add expense</h2>
+            <button class="text-button hidden" id="cancelEditBtn" type="button">Cancel</button>
+          </div>
+
+          <form id="expenseForm" class="expense-form">
+            <label>
+              <span>Description</span>
+              <input id="description" name="description" type="text" placeholder="Groceries" autocomplete="off" required />
+            </label>
+
+            <div class="form-row">
+              <label>
+                <span>Amount</span>
+                <input id="amount" name="amount" type="number" min="0.01" step="0.01" placeholder="450.50" required />
+              </label>
+              <label>
+                <span>Date</span>
+                <input id="date" name="date" type="date" required />
+              </label>
+            </div>
+
+            <label>
+              <span>Category</span>
+              <select id="category" name="category">
+                <option>Food</option>
+                <option>Transport</option>
+                <option>Home</option>
+                <option>Health</option>
+                <option>Shopping</option>
+                <option>Bills</option>
+                <option>Entertainment</option>
+                <option>Other</option>
+              </select>
+            </label>
+
+            <label>
+              <span>Monthly budget</span>
+              <input id="budget" name="budget" type="number" min="0" step="1" placeholder="25000" />
+            </label>
+
+            <button class="primary-button" id="submitBtn" type="submit">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+              Save expense
+            </button>
+          </form>
+        </aside>
+
+        <section class="panel list-panel">
+          <div class="toolbar">
+            <div class="search-wrap">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.3-4.3M10.8 18a7.2 7.2 0 1 1 0-14.4 7.2 7.2 0 0 1 0 14.4Z"/></svg>
+              <input id="search" type="search" placeholder="Search expenses" aria-label="Search expenses" />
+            </div>
+            <select id="categoryFilter" aria-label="Filter by category">
+              <option value="all">All categories</option>
+              <option>Food</option>
+              <option>Transport</option>
+              <option>Home</option>
+              <option>Health</option>
+              <option>Shopping</option>
+              <option>Bills</option>
+              <option>Entertainment</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <div class="content-split">
+            <div class="expense-list-wrap">
+              <div class="list-header">
+                <h2>Expenses</h2>
+                <span id="resultCount">0 items</span>
+              </div>
+              <ul id="expenseList" class="expense-list" aria-live="polite"></ul>
+            </div>
+
+            <aside class="chart-panel" aria-label="Category breakdown">
+              <div class="chart-header">
+                <h2>Breakdown</h2>
+                <span id="chartTotal">₹0.00</span>
+              </div>
+              <canvas id="categoryChart" width="320" height="260"></canvas>
+              <div id="legend" class="legend"></div>
+            </aside>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <template id="emptyTemplate">
+      <li class="empty-state">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10M7 12h10M7 17h6M5 3h14a2 2 0 0 1 2 2v18l-4-3-4 3-4-3-4 3V5a2 2 0 0 1 2-2Z"/></svg>
+        <strong>No expenses yet</strong>
+        <span>Add your first expense to see totals and charts.</span>
+      </li>
+    </template>
+
+    <script src="app.js"></script>
+  </body>
+</html>
